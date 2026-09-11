@@ -57,7 +57,8 @@ modules:
           - io.github.kolunmi.Bazaar
 
   - type: systemd
-    enabled:
-      - lactd
+    system:
+      enabled:
+        - lactd
 
   - type: signing
