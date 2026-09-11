@@ -14,7 +14,7 @@ jobs:
       IMAGE_REPO: ghcr.io
       IMAGE_NAME: ${{ github.repository_owner }}/niri-gaming
       IMAGE_TAG: latest
-      VERSION: "43" # Fedora major of current bazzite:stable
+      VERSION: "44" # Fedora major of current bazzite:stable
     steps:
       - name: Build ISO
         uses: jasonn3/build-container-installer@main
