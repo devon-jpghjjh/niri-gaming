@@ -1,0 +1,37 @@
+name: iso
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 07 * * *" # after the 06:00 UTC image build
+permissions:
+  contents: read
+jobs:
+  iso:
+    name: Build netinstall ISO
+    runs-on: ubuntu-latest
+    env:
+      ARCH: x86_64
+      IMAGE_REPO: ghcr.io
+      IMAGE_NAME: ${{ github.repository_owner }}/niri-gaming
+      IMAGE_TAG: latest
+      VERSION: "43" # Fedora major of current bazzite:stable
+    steps:
+      - name: Build ISO
+        uses: jasonn3/build-container-installer@main
+        id: build
+        with:
+          arch: ${{ env.ARCH }}
+          image_name: ${{ env.IMAGE_NAME }}
+          image_repo: ${{ env.IMAGE_REPO }}
+          image_tag: ${{ env.IMAGE_TAG }}
+          version: ${{ env.VERSION }}
+          iso_name: ${{ env.IMAGE_NAME }}-${{ env.IMAGE_TAG }}-${{ env.VERSION }}.iso
+      - name: Upload ISO as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.build.outputs.iso_name }}
+          path: |
+            ${{ steps.build.outputs.iso_path }}/${{ steps.build.outputs.iso_name }}
+            ${{ steps.build.outputs.iso_path }}/${{ steps.build.outputs.iso_name }}-CHECKSUM
+          if-no-files-found: error
+          compression-level: 0
