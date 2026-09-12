@@ -23,6 +23,7 @@ jobs:
           arch: ${{ env.ARCH }}
           image_name: ${{ env.IMAGE_NAME }}
           image_repo: ${{ env.IMAGE_REPO }}
+          image_src: docker://ghcr.io/${{ github.repository_owner }}/niri-gaming:latest
           image_tag: ${{ env.IMAGE_TAG }}
           version: ${{ env.VERSION }}
           iso_name: ${{ env.IMAGE_NAME }}-${{ env.IMAGE_TAG }}-${{ env.VERSION }}.iso
