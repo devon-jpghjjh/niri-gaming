@@ -74,6 +74,32 @@ modules:
         - kinfocenter
         - kwalletmanager
         - ksshaskpass
+        # second pass: plasma orphan-island leftovers (verified present in build log)
+        - plasma-systemsettings
+        - plasma-breeze
+        - plasma-breeze-common
+        - plasma-breeze-qt5
+        - plasma-breeze-qt6
+        - plasma-oxygen
+        - plasma-oxygen-qt5
+        - plasma-oxygen-qt6
+        - plasma-milou
+        - plasma-vault
+        - plasma-keyboard
+        - plasma-thunderbolt
+        - plasma-browser-integration
+        - plasma-foreground-booster-dmemcg
+        - plasma-integration
+        - plasma-integration-qt5
+        - plasma-desktop-doc
+        - plasma-workspace-common
+        - plasma-activities
+        - plasma-activities-stats
+        - kde-gtk-config
+        - kde-cli-tools
+        - kde-settings-plasma
+        - kwin-common
+        - kwin-libs
 
   - type: dnf
     install:

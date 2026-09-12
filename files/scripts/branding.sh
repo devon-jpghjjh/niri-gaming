@@ -34,9 +34,23 @@ if [ -n "$base" ] && [ ! -d "$PLY/d_ARK" ]; then
   cp -r "$PLY/$base" "$PLY/d_ARK"
   mv "$PLY/d_ARK/$base.plymouth" "$PLY/d_ARK/d_ARK.plymouth"
   sed -i "s|/themes/$base|/themes/d_ARK|g" "$PLY/d_ARK/d_ARK.plymouth"
+  swapped=0
   for img in watermark.png logo.png header-image.png; do
-    [ -f "$PLY/d_ARK/$img" ] && cp "$LOGO" "$PLY/d_ARK/$img" && log "swapped $img"
+    if [ -f "$PLY/d_ARK/$img" ]; then
+      cp "$LOGO" "$PLY/d_ARK/$img" && log "swapped $img" && swapped=1
+    fi
   done
+  # bgrt-style themes have no swappable logo; respin from spinner for a visible brand
+  if [ "$swapped" -eq 0 ] && [ "$base" != "spinner" ] && [ -f "$PLY/spinner/spinner.plymouth" ]; then
+    log "no logo slot in '$base'; respinning from spinner"
+    rm -rf "$PLY/d_ARK"
+    cp -r "$PLY/spinner" "$PLY/d_ARK"
+    mv "$PLY/d_ARK/spinner.plymouth" "$PLY/d_ARK/d_ARK.plymouth"
+    sed -i "s|/themes/spinner|/themes/d_ARK|g" "$PLY/d_ARK/d_ARK.plymouth"
+    for img in watermark.png logo.png header-image.png; do
+      [ -f "$PLY/d_ARK/$img" ] && cp "$LOGO" "$PLY/d_ARK/$img" && log "swapped $img"
+    done
+  fi
   if command -v plymouth-set-default-theme >/dev/null 2>&1; then
     plymouth-set-default-theme d_ARK || true
     log "plymouth default theme = d_ARK"
@@ -59,10 +73,14 @@ if [ -f "$THEME_DIR/theme.txt" ]; then
     echo "GRUB_THEME=\"$THEME_DIR/theme.txt\"" >> /etc/default/grub
   fi
   TTF="$(fc-match -f '%{file}' 'DejaVu Sans Mono Bold' 2>/dev/null || true)"
+  FAMILY="$(fc-match -f '%{family}' 'DejaVu Sans Mono Bold' 2>/dev/null | cut -d, -f1 || true)"
   if [ -n "$TTF" ] && command -v grub2-mkfont >/dev/null 2>&1; then
     grub2-mkfont -s 22 -o "$THEME_DIR/d_ARK-22.pf2" "$TTF" 2>/dev/null || true
     grub2-mkfont -s 16 -o "$THEME_DIR/d_ARK-16.pf2" "$TTF" 2>/dev/null || true
-    log "GRUB fonts generated from $TTF"
+    if [ -n "$FAMILY" ] && [ "$FAMILY" != "DejaVu Sans Mono" ]; then
+      sed -i "s/DejaVu Sans Mono/$FAMILY/g" "$THEME_DIR/theme.txt"
+    fi
+    log "GRUB fonts generated from $TTF (family: $FAMILY)"
   fi
   log "GRUB theme configured at $THEME_DIR"
 else
