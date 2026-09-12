@@ -17,7 +17,7 @@ jobs:
       VERSION: "44" # Fedora major of current bazzite:stable
     steps:
       - name: Build ISO
-        uses: jasonn3/build-container-installer@main
+        uses: devon-jpghjjh/build-container-installer@main
         id: build
         with:
           arch: ${{ env.ARCH }}

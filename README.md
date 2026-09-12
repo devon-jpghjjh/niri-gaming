@@ -1,43 +1,48 @@
-# BlueBuild Template &nbsp; [![bluebuild build badge](https://github.com/blue-build/template/actions/workflows/build.yml/badge.svg)](https://github.com/blue-build/template/actions/workflows/build.yml)
+# d_ARK &nbsp; [![build](https://github.com/devon-jpghjjh/niri-gaming/actions/workflows/build.yml/badge.svg)](https://github.com/devon-jpghjjh/niri-gaming/actions/workflows/build.yml) [![iso](https://github.com/devon-jpghjjh/niri-gaming/actions/workflows/iso.yml/badge.svg)](https://github.com/devon-jpghjjh/niri-gaming/actions/workflows/iso.yml)
 
-See the [BlueBuild docs](https://blue-build.org/how-to/setup/) for quick setup instructions for setting up your own repository based on this template.
+**d_ARK** is a custom Fedora Atomic gaming image built with [BlueBuild](https://blue-build.org/)
+on top of **[Bazzite](https://bazzite.gg/)** (not Silverblue/Fedora Workstation — the
+upstream template README mentioned silverblue-main; this repo builds from
+`ghcr.io/ublue-os/bazzite:stable`), with the **niri** scrollable-tiling compositor and
+**Noctalia** shell as the desktop instead of Plasma, plus:
 
-After setup, it is recommended you update this README to describe your custom image.
+- greetd + **Noctalia Greeter** login screen (no SDDM), Noctalia's built-in polkit agent
+- **LACT** + CoreCtrl (AMD GPU control for the RX 9070), `ujust d_ark-tweaks` applies the overclock karg
+- **Faugus Launcher**, protontricks — on top of Bazzite's full gaming stack (Steam + Game Mode, Lutris, Heroic, ProtonUp-Qt, MangoHud, gamescope, controller drivers)
+- Ghostty, yazi, micro, neovim, Brave Origin, KDE Connect
+- Telegram + Bazaar as system flatpaks on first boot
+- d_ARK branding: os-release identity, GRUB theme, Plymouth splash, wallpaper, fastfetch logo
 
-## Installation
+## Installing
 
-> [!WARNING]  
-> [This is an experimental feature](https://www.fedoraproject.org/wiki/Changes/OstreeNativeContainerStable), try at your own discretion.
+Flash the ISO from the [iso workflow artifacts](https://github.com/devon-jpghjjh/niri-gaming/actions/workflows/iso.yml)
+(Ventoy works; it's a full offline installer, btrfs is the default automatic layout), or
+rebase an existing atomic Fedora system:
 
-To rebase an existing atomic Fedora installation to the latest build:
+```bash
+rpm-ostree rebase ostree-unverified-registry:ghcr.io/devon-jpghjjh/niri-gaming:latest
+systemctl reboot
+rpm-ostree rebase ostree-image-signed:docker://ghcr.io/devon-jpghjjh/niri-gaming:latest
+systemctl reboot
+```
 
-- First rebase to the unsigned image, to get the proper signing keys and policies installed:
-  ```
-  rpm-ostree rebase ostree-unverified-registry:ghcr.io/blue-build/template:latest
-  ```
-- Reboot to complete the rebase:
-  ```
-  systemctl reboot
-  ```
-- Then rebase to the signed image, like so:
-  ```
-  rpm-ostree rebase ostree-image-signed:docker://ghcr.io/blue-build/template:latest
-  ```
-- Reboot again to complete the installation
-  ```
-  systemctl reboot
-  ```
+The ISO greeter is Noctalia Greeter; the desktop session is niri + Noctalia (Steam Game
+Mode is listed as a session too).
 
-The `latest` tag will automatically point to the latest build. That build will still always use the Fedora version specified in `recipe.yml`, so you won't get accidentally updated to the next major version.
-
-## ISO
-
-If build on Fedora Atomic, you can generate an offline ISO with the instructions available [here](https://blue-build.org/how-to/generate-iso/#_top). These ISOs cannot unfortunately be distributed on GitHub for free due to large sizes, so for public projects something else has to be used for hosting.
+> [!NOTE]
+> On an immutable system `/` always shows as 100% full — that's the read-only composefs.
+> Your files live in `/var/home`, which shares the disk with everything else.
 
 ## Verification
 
-These images are signed with [Sigstore](https://www.sigstore.dev/)'s [cosign](https://github.com/sigstore/cosign). You can verify the signature by downloading the `cosign.pub` file from this repo and running the following command:
+Images are signed with cosign. Verify with the `cosign.pub` in this repo:
 
 ```bash
-cosign verify --key cosign.pub ghcr.io/blue-build/template
+cosign verify --key cosign.pub ghcr.io/devon-jpghjjh/niri-gaming
 ```
+
+## Customizing
+
+Edit `recipes/recipe.yml` (packages, modules) or `files/` (branding, configs, scripts),
+push to `main`, and GitHub Actions rebuilds the image (~8 min, nightly) and can publish
+a fresh ISO. Docs: [recipes](https://blue-build.org/reference/recipe/), [modules](https://blue-build.org/reference/module/).

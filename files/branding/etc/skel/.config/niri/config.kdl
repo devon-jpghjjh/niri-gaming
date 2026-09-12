@@ -1,0 +1,4 @@
+// d_ARK — default niri autostart
+spawn-at-startup "noctalia"
+spawn-at-startup "kdeconnectd"
+spawn-at-startup "wlsunset"

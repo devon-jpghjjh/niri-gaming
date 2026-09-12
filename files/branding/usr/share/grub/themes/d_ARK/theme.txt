@@ -1,0 +1,25 @@
+title-text: ""
+desktop-image: "background.png"
+desktop-color: "#0b0f14"
+
++ boot_menu {
+  left = 30%
+  top = 42%
+  width = 40%
+  height = 30%
+  item_color = "#8b949e"
+  item_font = "DejaVu Sans Mono 22"
+  selected_item_color = "#22d3ee"
+  selected_item_font = "DejaVu Sans Mono 22"
+  item_spacing = 10
+}
+
++ label {
+  top = 88%
+  left = 40%
+  width = 20%
+  align = "center"
+  color = "#484f58"
+  font = "DejaVu Sans Mono 16"
+  text = "d_ARK"
+}
