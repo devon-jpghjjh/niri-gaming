@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="44%" r="60%">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="#0b0f14"/>
+  <rect width="1920" height="1080" fill="url(#glow)"/>
+  <g transform="translate(740,225) scale(0.86)">
+    <rect width="512" height="512" rx="112" fill="#0d1117"/>
+    <rect x="1.5" y="1.5" width="509" height="509" rx="110.5" fill="none" stroke="#21262d" stroke-width="3"/>
+    <text x="50%" y="53%" text-anchor="middle" dominant-baseline="middle"
+          font-family="JetBrains Mono NL, JetBrains Mono, Noto Sans Mono, DejaVu Sans Mono, monospace"
+          font-size="148" font-weight="800">
+      <tspan fill="#7d8590">d_</tspan><tspan fill="#22d3ee">ARK</tspan>
+    </text>
+  </g>
+  <text x="960" y="872" text-anchor="middle"
+        font-family="JetBrains Mono NL, JetBrains Mono, Noto Sans Mono, DejaVu Sans Mono, monospace"
+        font-size="42" font-weight="700" fill="#7d8590" letter-spacing="16">d_ARK</text>
+  <text x="1872" y="1044" text-anchor="end"
+        font-family="JetBrains Mono NL, JetBrains Mono, Noto Sans Mono, DejaVu Sans Mono, monospace"
+        font-size="24" fill="#30363d">niri &#183; gaming &#183; bazzite</text>
+</svg>

@@ -1,10 +1,18 @@
 ---
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
 name: niri-gaming
-description: Bazzite-based gaming image with niri + Noctalia, LACT, Faugus Launcher, Brave Origin, Ghostty and yazi.
+description: d_ARK — Bazzite-based gaming image with niri + Noctalia, LACT, Faugus Launcher, Brave Origin, Ghostty and yazi.
 
 base-image: ghcr.io/ublue-os/bazzite
 image-version: stable
+
+labels:
+  org.opencontainers.image.title: d_ARK
+  org.opencontainers.image.description: d_ARK — Bazzite-based gaming image with niri + Noctalia, LACT, Faugus Launcher, Brave Origin, Ghostty and yazi.
+  org.opencontainers.image.source: https://github.com/devon-jpghjjh/niri-gaming
+  io.artifacthub.package.logo-url: https://raw.githubusercontent.com/devon-jpghjjh/niri-gaming/main/files/branding/usr/share/pixmaps/d_ARK-logo.png
+  io.artifacthub.package.keywords: bazzite, gaming, niri, noctalia, atomic, ublue, d_ARK
+  io.artifacthub.package.maintainers: '[{"name":"devon"}]'
 
 modules:
   - type: dnf
@@ -60,5 +68,20 @@ modules:
     system:
       enabled:
         - lactd
+
+  - type: os-release
+    properties:
+      NAME: d_ARK
+      PRETTY_NAME: d_ARK
+      LOGO: d_ARK-logo-icon
+
+  - type: files
+    files:
+      - source: branding
+        destination: /
+
+  - type: script
+    scripts:
+      - branding.sh
 
   - type: signing

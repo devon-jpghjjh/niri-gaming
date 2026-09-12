@@ -12,7 +12,7 @@ jobs:
     env:
       ARCH: x86_64
       IMAGE_REPO: ghcr.io/${{ github.repository_owner }}
-      IMAGE_NAME: niri-gaming
+      IMAGE_NAME: d_ARK
       IMAGE_TAG: latest
       VERSION: "44" # Fedora major of current bazzite:stable
     steps:
