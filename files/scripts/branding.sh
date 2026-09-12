@@ -69,7 +69,16 @@ else
   log "WARN: $THEME_DIR/theme.txt missing; GRUB relabeled only"
 fi
 
-# --- 4. polkit agents: only system polkit + Noctalia's agent -----------------
+# --- 4. Plasma removal audit --------------------------------------------------
+leftover_kde="$(rpm -qa | grep -iE '^(plasma|kwin|sddm|kde-)' | sort || true)"
+if [ -n "$leftover_kde" ]; then
+  log "note: kde/plasma packages still present (deps kept or leaf apps):"
+  echo "$leftover_kde" | while read -r pkg; do log "  $pkg"; done
+else
+  log "plasma removal: no plasma/kde packages remain"
+fi
+
+# --- 5. polkit agents: only system polkit + Noctalia's agent -----------------
 leftover="$(rpm -qa | grep -iE 'polkit-(kde|gnome)' || true)"
 if [ -n "$leftover" ]; then
   log "WARN: foreign polkit agents still present: $leftover"
@@ -77,6 +86,6 @@ else
   log "polkit ok: no kde/gnome polkit agents"
 fi
 
-# --- 5. icon cache ------------------------------------------------------------
+# --- 6. icon cache ------------------------------------------------------------
 command -v gtk-update-icon-cache >/dev/null 2>&1 && gtk-update-icon-cache -f -t /usr/share/icons/hicolor >/dev/null 2>&1 || true
 log "done"

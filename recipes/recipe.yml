@@ -50,6 +50,30 @@ modules:
     remove:
       packages:
         - xwaylandvideobridge # opens a blank window under niri
+        - sddm
+        - sddm-breeze
+        - sddm-kcm
+        - plasma-desktop
+        - plasma-workspace
+        - kwin
+        - kdeplasma-addons
+        - polkit-kde-agent-1
+        - dolphin
+        - konsole
+        - kate
+        - ark
+        - gwenview
+        - okular
+        - spectacle
+        - kcalc
+        - krunner
+        - plasma-nm
+        - plasma-pa
+        - plasma-disks
+        - plasma-systemmonitor
+        - kinfocenter
+        - kwalletmanager
+        - ksshaskpass
 
   - type: dnf
     install:
@@ -59,10 +83,6 @@ modules:
         - wlsunset # night light
         - playerctl # media-key control
         - qt6ct # Qt theming without KDE settings
-
-  - type: script
-    scripts:
-      - remove-plasma.sh # strip Plasma/KDE: pure niri + Noctalia system
 
   - type: justfiles
 
